@@ -1,0 +1,14 @@
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/bin/Debug/net10.0/ConsoleCrawler
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/bin/Debug/net10.0/ConsoleCrawler.deps.json
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/bin/Debug/net10.0/ConsoleCrawler.runtimeconfig.json
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/bin/Debug/net10.0/ConsoleCrawler.dll
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/bin/Debug/net10.0/ConsoleCrawler.pdb
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ConsoleCrawler.GeneratedMSBuildEditorConfig.editorconfig
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ConsoleCrawler.AssemblyInfoInputs.cache
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ConsoleCrawler.AssemblyInfo.cs
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ConsoleCrawler.csproj.CoreCompileInputs.cache
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ConsoleCrawler.dll
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/refint/ConsoleCrawler.dll
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ConsoleCrawler.pdb
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ConsoleCrawler.genruntimeconfig.cache
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ref/ConsoleCrawler.dll
