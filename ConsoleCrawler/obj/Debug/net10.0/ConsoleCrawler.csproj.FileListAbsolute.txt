@@ -12,3 +12,7 @@
 /home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ConsoleCrawler.pdb
 /home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ConsoleCrawler.genruntimeconfig.cache
 /home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ref/ConsoleCrawler.dll
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ConsoleCrawler.sourcelink.json
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/bin/Debug/net10.0/HtmlAgilityPack.dll
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ConsoleCrawler.csproj.AssemblyReference.cache
+/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/obj/Debug/net10.0/ConsoleC.8663189A.Up2Date

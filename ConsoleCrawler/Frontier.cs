@@ -8,7 +8,7 @@ public class Frontier
    public void Add(Uri url)
    {
       _queue.Enqueue(url);
-      Console.WriteLine($"{url}, added to queue");
+      //Console.WriteLine($"{url}, added to queue");
    }
 
    public Uri GetNext()

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "IdDmw1ffwas=",
+  "dgSpecHash": "zEOziB8Q/tw=",
   "success": true,
   "projectFilePath": "/home/jay/RiderProjects/ConsoleCrawler/ConsoleCrawler/ConsoleCrawler.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/jay/.nuget/packages/htmlagilitypack/1.12.4/htmlagilitypack.1.12.4.nupkg.sha512"
+  ],
   "logs": []
 }
