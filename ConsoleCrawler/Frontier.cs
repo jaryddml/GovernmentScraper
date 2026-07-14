@@ -4,11 +4,21 @@ using System.Collections.Concurrent;
 public class Frontier
 {
    private Queue<Uri> _queue = new();
+   HashSet<Uri> seenUrls = new();
 
    public void Add(Uri url)
    {
-      _queue.Enqueue(url);
-      //Console.WriteLine($"{url}, added to queue");
+      bool wasAddedToSeenUrls = seenUrls.Add(url);
+      if (wasAddedToSeenUrls)
+      {
+         _queue.Enqueue(url);
+         Console.WriteLine($"{url}, added to queue");
+      }
+      else
+      {
+         Console.WriteLine($"{url}, Not added to queue");
+         return;
+      }
    }
 
    public Uri GetNext()

@@ -17,12 +17,14 @@ public class LinkParser
                 //Console.WriteLine($"href = '{href}'");
                 if (string.IsNullOrWhiteSpace(href))
                 {
+                    Console.WriteLine($"{href} is empty");
                     continue;
                 }
+                // resolver is smart and can put all links through without breaking them
                 Uri resolvedUri = new Uri(baseUri, href);
                 //Console.WriteLine($"tryCreate: {resolvedUri}");
 
-                if (resolvedUri.Scheme == "https" || resolvedUri.Scheme == "http")
+                if (resolvedUri.Scheme == Uri.UriSchemeHttp || resolvedUri.Scheme == Uri.UriSchemeHttps)
                 {
                     //send to isDotGovWebsite();
                     Console.WriteLine($"I am a valid link {resolvedUri}");
