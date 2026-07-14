@@ -13,12 +13,13 @@ internal class Program
                 frontier.Add(uri);
             }
         }
-
+        
+        // to test the functionality of other systems until i impliment frontier logic
         string testUrl = "https://virginia.gov";
         PageFetcher pageFetcher = new PageFetcher();
         string result = await pageFetcher.FetchPage(testUrl);
 
         LinkParser linkParser = new LinkParser();
-        linkParser.LinkGetter(result);
+        linkParser.LinkGetter(result, testUrl);
     }
 }
