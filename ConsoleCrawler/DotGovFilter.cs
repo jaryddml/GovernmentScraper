@@ -1,13 +1,26 @@
 using System;
 public class DotGovFitler
 {
-    public string AllowedTLD = ".gov";
+    public string AllowedTLD = "gov";
 
-    public void IsDotGov(string url)
+    public List<Uri> IsDotGov(List<Uri> uris)
     {
-        if (url.Contains(AllowedTLD))
+        List<Uri> dotGovUris = new List<Uri>();
+        foreach (Uri uri in uris)
         {
-            Console.WriteLine($"{url} is a dotgov website");
+            string host = uri.Host;
+            string[] parts = host.Split('.');
+            if (parts[parts.Length - 1] == AllowedTLD)
+            {
+                Console.WriteLine($"{uri} is a dotgov website");
+                dotGovUris.Add(uri);
+            }
+            else
+            {
+                continue;
+            }
         }
+
+        return dotGovUris;
     }
 }

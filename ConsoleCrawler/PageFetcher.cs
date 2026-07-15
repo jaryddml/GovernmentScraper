@@ -5,7 +5,7 @@ public class PageFetcher
 {
     HttpClient Client = new HttpClient();
 
-    public async Task<string> FetchPage(string url)
+    public async Task<string> FetchPage(Uri url)
     {
         try
         {
@@ -16,7 +16,7 @@ public class PageFetcher
         }
         catch (HttpRequestException err)
         {
-            Console.WriteLine($"Request failed: {err.Message}");
+            Console.WriteLine($"Request failed: {err.Message} on {url}");
             return "err";
         }
     }

@@ -7,38 +7,53 @@ internal class Program
         string filePath = "seedurls.txt";
         foreach (string url in File.ReadLines(filePath))
         {
-            if (Uri.TryCreate(url, UriKind.Absolute , out var uri))
+            if (Uri.TryCreate(url, UriKind.Absolute , out Uri uri))
             {
                 frontier.Add(uri);
             }
         }
-        
-        // to test the functionality of other systems until i implement frontier logic
-        string testUrl = "https://virginia.gov";
+
         PageFetcher pageFetcher = new PageFetcher();
-        string result = await pageFetcher.FetchPage(testUrl);
-
         LinkParser linkParser = new LinkParser();
-        linkParser.LinkGetter(result, testUrl);
-        
-        //test for DotgovFilter
         DotGovFitler dotGovFilter = new DotGovFitler();
-        dotGovFilter.IsDotGov(testUrl);
-        
-        //test for .add frontier
+        List<Uri> filteredLinks = new List<Uri>();
 
-        Uri testUri = new Uri("https://ca.gov");
-        frontier.Add(testUri);
-        frontier.Add(testUri);
-        frontier.PrintQueue();
+
+        do
+        {
+            Uri currentWebPage = frontier.GetNext();
+            Console.WriteLine($"CURRENT WEB PAGE {currentWebPage}");
+            string result = await pageFetcher.FetchPage(currentWebPage);
+            if (result == "err")
+            {
+                continue;
+            }
+
+            List<Uri> scrapedLinks = linkParser.LinkGetter(result, currentWebPage);
+            Console.WriteLine($"Scraped links: {scrapedLinks.Count}");
+            Console.WriteLine($"Scraped links: {scrapedLinks.Count}");
+            Console.WriteLine($"Scraped links: {scrapedLinks.Count}");
+            Console.WriteLine($"Scraped links: {scrapedLinks.Count}");
+
+            filteredLinks = dotGovFilter.IsDotGov(scrapedLinks);
+            Console.WriteLine($"Filtered links: {filteredLinks.Count}");
+            Console.WriteLine($"Filtered links: {filteredLinks.Count}");
+            Console.WriteLine($"Filtered links: {filteredLinks.Count}");
+            Console.WriteLine($"Filtered links: {filteredLinks.Count}");
+            
+            
+            foreach (Uri link in filteredLinks)
+            {
+                frontier.Add(link);
+            }
+        }while (frontier.IsQueEmpty() != true);
     }
 }
 
-// seeded urls -> Frontier -> page fetcher -> link parser -> link filter -> check if reseen link -> frontier
+// seeded urls -> Frontier -> page fetcher -> link parser -> link filter -> check if reseen link -> frontier queue
 //                                  |
 //                                  V
 //                                  official information scraper. -> store data -> varify if accurate -> push to front end
 
 
-// need to implement a "check if its reseen link", and "official information scraper".
-// then scaffold everything together.    
+// need to implement the rest of frontier. Add more robust error handling. and scaffold everything together.

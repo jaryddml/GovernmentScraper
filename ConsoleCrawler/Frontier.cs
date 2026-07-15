@@ -17,7 +17,6 @@ public class Frontier
       else
       {
          Console.WriteLine($"{url}, Not added to queue");
-         return;
       }
    }
 
@@ -26,7 +25,6 @@ public class Frontier
       if (IsQueEmpty())
       {
          Console.WriteLine("Nothing Left in frontier");
-         
       }
       return _queue.Dequeue();
    }

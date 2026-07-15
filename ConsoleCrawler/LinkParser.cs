@@ -2,9 +2,9 @@ using HtmlAgilityPack;
 
 public class LinkParser
 {
-    public void LinkGetter(string html, string sourceUrl)
+    public List<Uri> LinkGetter(string html, Uri sourceUrl)
     {
-        Uri baseUri = new Uri(sourceUrl);
+        List<Uri> linkList = new List<Uri>();
         HtmlDocument doc = new HtmlDocument();
         doc.LoadHtml(html);
         var anchorNodes = doc.DocumentNode.SelectNodes("//a[@href]");
@@ -21,13 +21,14 @@ public class LinkParser
                     continue;
                 }
                 // resolver is smart and can put all links through without breaking them
-                Uri resolvedUri = new Uri(baseUri, href);
+                Uri resolvedUri = new Uri(sourceUrl, href);
                 //Console.WriteLine($"tryCreate: {resolvedUri}");
 
                 if (resolvedUri.Scheme == Uri.UriSchemeHttp || resolvedUri.Scheme == Uri.UriSchemeHttps)
                 {
                     //send to isDotGovWebsite();
                     Console.WriteLine($"I am a valid link {resolvedUri}");
+                    linkList.Add(resolvedUri);
                 }
                 else
                 {
@@ -35,5 +36,7 @@ public class LinkParser
                 }
             }
         }
+
+        return linkList;
     }
 }
