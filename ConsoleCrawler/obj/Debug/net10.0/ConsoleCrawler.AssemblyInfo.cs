@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConsoleCrawler")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f44a1154533163873470c6b3dc9c825444a9427f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+527a4fd1ef73dc77b8c5c0865c272e9c946a0fb7")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConsoleCrawler")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConsoleCrawler")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

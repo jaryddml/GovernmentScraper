@@ -31,6 +31,8 @@ public class CrawlUrl
 
     public CrawlStatus Status { get; set; } = CrawlStatus.Queued;
 
+    public int WebpageQuality { get; set; } = 0;
+
     public enum CrawlStatus
     {
         Queued,
@@ -101,6 +103,12 @@ public class DbOperation
     {
         crawlUrl.Status = CrawlUrl.CrawlStatus.Failed;
         crawlUrl.Attempts++;
+        database.SaveChanges();
+    }
+
+    public void SetWebpageQuality(CrawlUrl crawlUrl, int quality)
+    {
+        crawlUrl.WebpageQuality = quality;
         database.SaveChanges();
     }
 }

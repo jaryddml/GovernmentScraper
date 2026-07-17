@@ -15,6 +15,7 @@ internal class Program
         DbOperation dbOperation = new DbOperation(database);
         Frontier frontier = new Frontier(dbOperation);
         TimeSpan requestedDelay = TimeSpan.FromSeconds(2);
+        PageClassifier pageClassifier = new PageClassifier();
         
         // Inserts Seeded URLS
         string filePath = "seedurls.txt";
@@ -44,6 +45,8 @@ internal class Program
             }
             Console.WriteLine($"CURRENT WEB PAGE {currentWebPageUri}");
             string result = await pageFetcher.FetchPage(currentWebPageUri);
+            int pageRating = pageClassifier.GetScore(result, currentWebPageUri);
+            dbOperation.SetWebpageQuality(currentWebPage, pageRating);
 
             await Task.Delay(requestedDelay);
             
