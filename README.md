@@ -6,6 +6,11 @@ GovernmentScraper is a C#/.NET crawler that discovers and indexes information fr
 
 ## Requirements
 
+```bash
+dotnet --version
+dotnet --list-sdks
+```
+
 * .NET 10 SDK
 * Git
 
