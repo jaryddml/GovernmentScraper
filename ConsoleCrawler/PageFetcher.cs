@@ -3,13 +3,18 @@ using System.Threading.Tasks;
 
 public class PageFetcher
 {
-    HttpClient Client = new HttpClient();
+    HttpClient client = new HttpClient();
+    
 
     public async Task<string> FetchPage(Uri url)
     {
+        client.DefaultRequestHeaders.TryAddWithoutValidation(
+            "User-Agent", 
+            "GovCrawler/0.1 (Github: Currently Closed Repo; Contact: GovernmentCrawler@protonmail.com; Purpose: Database of governing officials)"
+        );
         try
         {
-            string responseBody = await Client.GetStringAsync(url);
+            string responseBody = await client.GetStringAsync(url);
 
             //Console.WriteLine(responseBody);
             return responseBody;

@@ -13,7 +13,8 @@ internal class Program
         using CrawlerDatabase database = new CrawlerDatabase();
         database.Database.EnsureCreated();
         DbOperation dbOperation = new DbOperation(database);
-        Frontier frontier = new Frontier(dbOperation); 
+        Frontier frontier = new Frontier(dbOperation);
+        TimeSpan requestedDelay = TimeSpan.FromSeconds(2);
         
         // Inserts Seeded URLS
         string filePath = "seedurls.txt";
@@ -43,6 +44,9 @@ internal class Program
             }
             Console.WriteLine($"CURRENT WEB PAGE {currentWebPageUri}");
             string result = await pageFetcher.FetchPage(currentWebPageUri);
+
+            await Task.Delay(requestedDelay);
+            
             if (result == "err")
             {
                 dbOperation.MarkFailed(currentWebPage);
