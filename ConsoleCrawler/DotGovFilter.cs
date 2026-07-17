@@ -12,7 +12,6 @@ public class DotGovFitler
             string[] parts = host.Split('.');
             if (parts[parts.Length - 1] == AllowedTLD)
             {
-                Console.WriteLine($"{uri} is a dotgov website");
                 dotGovUris.Add(uri);
             }
             else

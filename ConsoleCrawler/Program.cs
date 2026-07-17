@@ -1,9 +1,21 @@
 using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
+
 internal class Program
 {
     static async Task Main()
     {
-        Frontier frontier = new Frontier(); 
+        // Constructs all needed classes
+        PageFetcher pageFetcher = new PageFetcher();
+        LinkParser linkParser = new LinkParser();
+        DotGovFitler dotGovFilter = new DotGovFitler();
+        using CrawlerDatabase database = new CrawlerDatabase();
+        database.Database.EnsureCreated();
+        DbOperation dbOperation = new DbOperation(database);
+        Frontier frontier = new Frontier(dbOperation); 
+        
+        // Inserts Seeded URLS
         string filePath = "seedurls.txt";
         foreach (string url in File.ReadLines(filePath))
         {
@@ -13,40 +25,41 @@ internal class Program
             }
         }
 
-        PageFetcher pageFetcher = new PageFetcher();
-        LinkParser linkParser = new LinkParser();
-        DotGovFitler dotGovFilter = new DotGovFitler();
-        List<Uri> filteredLinks = new List<Uri>();
-
-
         do
         {
-            Uri currentWebPage = frontier.GetNext();
-            Console.WriteLine($"CURRENT WEB PAGE {currentWebPage}");
-            string result = await pageFetcher.FetchPage(currentWebPage);
+            CrawlUrl currentWebPage = frontier.GetNext();
+            if (currentWebPage == null)
+            {
+                Console.WriteLine("Queue empty");
+                break;
+            }
+            
+            dbOperation.MarkProcessing(currentWebPage);
+
+            if (!Uri.TryCreate(currentWebPage.Url, UriKind.Absolute, out Uri currentWebPageUri))
+            {
+                Console.WriteLine("could not make uri");
+                break;
+            }
+            Console.WriteLine($"CURRENT WEB PAGE {currentWebPageUri}");
+            string result = await pageFetcher.FetchPage(currentWebPageUri);
             if (result == "err")
             {
+                dbOperation.MarkFailed(currentWebPage);
                 continue;
             }
 
-            List<Uri> scrapedLinks = linkParser.LinkGetter(result, currentWebPage);
-            Console.WriteLine($"Scraped links: {scrapedLinks.Count}");
-            Console.WriteLine($"Scraped links: {scrapedLinks.Count}");
-            Console.WriteLine($"Scraped links: {scrapedLinks.Count}");
-            Console.WriteLine($"Scraped links: {scrapedLinks.Count}");
+            List<Uri> scrapedLinks = linkParser.LinkGetter(result, currentWebPageUri);
+            List<Uri> filteredLinks = new List<Uri>();
 
             filteredLinks = dotGovFilter.IsDotGov(scrapedLinks);
-            Console.WriteLine($"Filtered links: {filteredLinks.Count}");
-            Console.WriteLine($"Filtered links: {filteredLinks.Count}");
-            Console.WriteLine($"Filtered links: {filteredLinks.Count}");
-            Console.WriteLine($"Filtered links: {filteredLinks.Count}");
-            
-            
+
             foreach (Uri link in filteredLinks)
             {
                 frontier.Add(link);
             }
-        }while (frontier.IsQueEmpty() != true);
+            dbOperation.MarkVisited(currentWebPage);
+        } while (dbOperation.isQueueEmpty());
     }
 }
 

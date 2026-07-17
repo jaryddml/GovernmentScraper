@@ -3,50 +3,50 @@ using System.Collections.Concurrent;
 
 public class Frontier
 {
-   private Queue<Uri> _queue = new();
-   HashSet<Uri> seenUrls = new();
+   private readonly DbOperation dbOperation;
 
+   public Frontier(DbOperation dbOperation)
+   {
+      this.dbOperation = dbOperation;
+   }
    public void Add(Uri url)
    {
-      bool wasAddedToSeenUrls = seenUrls.Add(url);
-      if (wasAddedToSeenUrls)
-      {
-         _queue.Enqueue(url);
-         Console.WriteLine($"{url}, added to queue");
-      }
-      else
-      {
-         Console.WriteLine($"{url}, Not added to queue");
-      }
+      Uri normalizedUrl = NormalizeUrl(url);
+      string urlString = normalizedUrl.OriginalString;
+
+      bool isAdded = dbOperation.TryAddUrl(urlString);
    }
 
-   public Uri GetNext()
+   public CrawlUrl? GetNext()
    {
-      if (IsQueEmpty())
-      {
-         Console.WriteLine("Nothing Left in frontier");
-      }
-      return _queue.Dequeue();
+      return dbOperation.GetNextUrl();
    }
+   
 
-   public bool IsQueEmpty()
+   public Uri NormalizeUrl(Uri url)
    {
-      if (_queue.Count == 0)
-      {
-         return true;
-      }
-      else
-      {
-         return false;
-      }
-   }
+      UriBuilder builder =  new UriBuilder(url);
+      builder.Scheme = Uri.UriSchemeHttps;
 
-   public void PrintQueue()
-   {
-      foreach (Uri url in _queue)
-      {
-         Console.WriteLine(url);
-      }
-   }
+      builder.Host = builder.Host.ToLowerInvariant();
 
+      if (builder.Scheme == Uri.UriSchemeHttps && builder.Port == 443)
+      {
+         builder.Port = -1;
+      }
+
+      string path = builder.Path;
+      if (path.Length > 1 && path.EndsWith('/'))
+      {
+         path = path.TrimEnd('/');
+      }
+      builder.Path = path;
+
+      builder.Fragment = string.Empty;
+
+      builder.Query = string.Empty;
+
+      return builder.Uri;
+
+   }
 }

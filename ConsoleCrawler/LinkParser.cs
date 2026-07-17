@@ -21,22 +21,15 @@ public class LinkParser
                     continue;
                 }
                 // resolver is smart and can put all links through without breaking them
-                Uri resolvedUri = new Uri(sourceUrl, href);
-                //Console.WriteLine($"tryCreate: {resolvedUri}");
+                bool isResolved = Uri.TryCreate(sourceUrl, href, out Uri resolvedUri);
+                if (!isResolved) continue;
 
                 if (resolvedUri.Scheme == Uri.UriSchemeHttp || resolvedUri.Scheme == Uri.UriSchemeHttps)
                 {
-                    //send to isDotGovWebsite();
-                    Console.WriteLine($"I am a valid link {resolvedUri}");
                     linkList.Add(resolvedUri);
-                }
-                else
-                {
-                    Console.WriteLine($"i am not a valid link {resolvedUri}");
                 }
             }
         }
-
         return linkList;
     }
 }
