@@ -206,29 +206,6 @@ dotnet --list-sdks
 
 ---
 
-# Getting Started
-
-Clone the repository:
-
-```bash
-git clone git@github.com:jaryddml/GovernmetScraper.git
-cd GovernmetScraper
-```
-
-Restore dependencies:
-
-```bash
-dotnet restore
-```
-
-Run the crawler:
-
-```bash
-dotnet run
-```
-
----
-
 # Project Structure
 
 ```text
