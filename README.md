@@ -192,20 +192,6 @@ The crawler architecture is being designed to support significantly more advance
 
 ---
 
-# Requirements
-
-* .NET 10 SDK
-* Git
-
-Verify installation:
-
-```bash
-dotnet --version
-dotnet --list-sdks
-```
-
----
-
 # Project Structure
 
 ```text
