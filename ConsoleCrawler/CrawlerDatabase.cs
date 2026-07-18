@@ -30,8 +30,10 @@ public class CrawlUrl
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public CrawlStatus Status { get; set; } = CrawlStatus.Queued;
-
+    // Quality is determined by the keywords found as described in PageClassifer.cs. This is really a number for the user to adjust the weights and measures of certiain key value pairs to get an increased hit probability.
     public int WebpageQuality { get; set; } = 0;
+    // Priority derived from the same keyword list but only from the Url. not the fetched html
+    public int QueuePriority { get; set; } = 0;
 
     public enum CrawlStatus
     {
@@ -51,7 +53,7 @@ public class DbOperation
         this.database = database;
     }
     
-    public bool TryAddUrl(string url)
+    public bool TryAddUrl(string url, int priority)
     {
        bool alreadyExists =  database.CrawlUrls.Any(crawlUrl => crawlUrl.Url == url);
 
@@ -62,9 +64,11 @@ public class DbOperation
 
        CrawlUrl crawlUrl = new()
        {
-           Url = url
+           Url = url,
+           QueuePriority = priority
        };
        database.CrawlUrls.Add(crawlUrl);
+       
        database.SaveChanges();
        return true;
     }
@@ -73,7 +77,8 @@ public class DbOperation
     {
         return database.CrawlUrls
             .Where(crawlUrl => crawlUrl.Status == CrawlUrl.CrawlStatus.Queued)
-            .OrderBy(crawlUrl => crawlUrl.CreatedAt)
+            .OrderByDescending(crawlUrl => crawlUrl.QueuePriority)
+            .ThenBy(crawlUrl => crawlUrl.CreatedAt)
             .FirstOrDefault();
     }
 

@@ -23,7 +23,7 @@ internal class Program
         {
             if (Uri.TryCreate(url, UriKind.Absolute , out Uri uri))
             {
-                frontier.Add(uri);
+                frontier.Add(uri, 0);
             }
         }
 
@@ -45,7 +45,7 @@ internal class Program
             }
             Console.WriteLine($"CURRENT WEB PAGE {currentWebPageUri}");
             string result = await pageFetcher.FetchPage(currentWebPageUri);
-            int pageRating = pageClassifier.GetScore(result, currentWebPageUri);
+            int pageRating = pageClassifier.GetScoreForPage(result, currentWebPageUri);
             dbOperation.SetWebpageQuality(currentWebPage, pageRating);
 
             await Task.Delay(requestedDelay);
@@ -63,7 +63,8 @@ internal class Program
 
             foreach (Uri link in filteredLinks)
             {
-                frontier.Add(link);
+                int priority = pageClassifier.GetScoreForUrl(link);
+                frontier.Add(link, priority);
             }
             dbOperation.MarkVisited(currentWebPage);
         } while (dbOperation.isQueueEmpty());

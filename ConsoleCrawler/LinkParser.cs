@@ -17,7 +17,6 @@ public class LinkParser
                 //Console.WriteLine($"href = '{href}'");
                 if (string.IsNullOrWhiteSpace(href))
                 {
-                    Console.WriteLine($"{href} is empty");
                     continue;
                 }
                 // resolver is smart and can put all links through without breaking them

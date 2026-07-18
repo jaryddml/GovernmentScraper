@@ -9,12 +9,12 @@ public class Frontier
    {
       this.dbOperation = dbOperation;
    }
-   public void Add(Uri url)
+   public void Add(Uri url, int priority)
    {
       Uri normalizedUrl = NormalizeUrl(url);
       string urlString = normalizedUrl.OriginalString;
 
-      bool isAdded = dbOperation.TryAddUrl(urlString);
+      bool isAdded = dbOperation.TryAddUrl(urlString, priority);
    }
 
    public CrawlUrl? GetNext()

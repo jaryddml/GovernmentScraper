@@ -61,17 +61,20 @@ public class PageClassifier
         ["government"] = 5
     };
 
-    public int GetScore(string html, Uri pageUrl)
+    public int GetScoreForPage(string html, Uri pageUrl)
     {
         HtmlDocument document = new();
         document.LoadHtml(html);
         int score = 0;
 
         string urlText = pageUrl.AbsolutePath.ToLowerInvariant();
-
         HtmlNode? titleNode = document.DocumentNode.SelectSingleNode("//title");
         string titleText = titleNode?.InnerText.ToLowerInvariant() ?? "";
-
+        HtmlNode? headingNode = document.DocumentNode.SelectSingleNode("//h1");
+        string headingNodeLower = headingNode?.InnerText.ToLowerInvariant() ?? "";
+        HtmlNode? bodyNode = document.DocumentNode.SelectSingleNode("//body");
+        string bodyNodeLower = bodyNode?.InnerText.ToLowerInvariant() ?? "";
+        
         foreach (KeyValuePair<string, int> keyword in Keywords)
         {
             if (urlText.Contains(keyword.Key))
@@ -83,7 +86,34 @@ public class PageClassifier
             {
                 score += keyword.Value;
             }
+
+            if (headingNodeLower.Contains(keyword.Key))
+            {
+                score += keyword.Value;
+            }
+
+            if (bodyNodeLower.Contains(keyword.Key))
+            {
+                int newValue = keyword.Value / 2;
+                score += newValue;
+            }
         }
+        return score;
+    }
+
+    public int GetScoreForUrl(Uri pageUrl)
+    {
+        int score = 0;
+        string url = pageUrl.OriginalString;
+
+        foreach (KeyValuePair<string, int> keyword in Keywords)
+        {
+            if (url.Contains(keyword.Key))
+            {
+                score += keyword.Value;
+            }
+        }
+
         return score;
     }
 }
