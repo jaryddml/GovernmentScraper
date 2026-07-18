@@ -21,7 +21,7 @@ dotnet --list-sdks
 Clone the repository:
 
 ```bash
-git clone git@github.com:jaryddml/GovernmetScraper.git
+git clone git@github.com:jaryddml/GovernmentScraper.git
 cd GovernmetScraper
 ```
 
